@@ -186,7 +186,7 @@ func NewSeleniumService(jarPath string, port int, opts ...ServiceOption) (*Servi
 	}
 	classpath = append(classpath, jarPath)
 	s.cmd.Args = append(s.cmd.Args, "-cp", strings.Join(classpath, ":"))
-	s.cmd.Args = append(s.cmd.Args, "org.openqa.grid.selenium.GridLauncherV3", "-port", strconv.Itoa(port), "-debug")
+	s.cmd.Args = append(s.cmd.Args, "org.openqa.grid.selenium.GridLauncherV3", "-port", strconv.Itoa(port))
 
 	if err := s.start(port); err != nil {
 		return nil, err
@@ -196,7 +196,7 @@ func NewSeleniumService(jarPath string, port int, opts ...ServiceOption) (*Servi
 
 // NewChromeDriverService starts a ChromeDriver instance in the background.
 func NewChromeDriverService(path string, port int, opts ...ServiceOption) (*Service, error) {
-	cmd := exec.Command(path, "--port="+strconv.Itoa(port), "--url-base=wd/hub", "--verbose")
+	cmd := exec.Command(path, "--port="+strconv.Itoa(port), "--url-base=wd/hub")
 	s, err := newService(cmd, "/wd/hub", port, opts...)
 	if err != nil {
 		return nil, err
